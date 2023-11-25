@@ -1,0 +1,4 @@
+*.db
+*.env
+*.idea
+*_backup.csv
