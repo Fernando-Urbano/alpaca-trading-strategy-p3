@@ -87,9 +87,14 @@ class Operator:
         # self.update_current_positions(update_equity=True)
         repr = []
         repr.append(f'Total equity: USD {self.equity:.2f}; Total cash: USD {self.cash:.2f}')
+        one_or_more_positions = False
         for ticker, position in self.current_usd_positions.items():
-            equity_in_ticker = self.current_prices[ticker] * self.current_quantities[ticker]
-            repr.append(f"{ticker}: USD {equity_in_ticker:.2f} ({(equity_in_ticker / self.equity):.2%})")
+            if ticker in self.current_prices.keys():
+                equity_in_ticker = self.current_prices[ticker] * self.current_quantities[ticker]
+                repr.append(f"{ticker}: USD {equity_in_ticker:.2f} ({(equity_in_ticker / self.equity):.2%})")
+                one_or_more_positions = True
+        if not one_or_more_positions:
+            repr.append("No positions open.")
         return '\n'.join(repr)
 
     def update_prices(self):

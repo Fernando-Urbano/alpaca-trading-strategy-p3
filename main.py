@@ -25,7 +25,7 @@ if __name__ == '__main__':
     # Cancel open orders
     operator.cancel_open_orders()
     operator.api.list_orders(status='all', limit=1)
-    update_position = operator.get_last_order_datetime() < datetime.datetime.utcnow() - datetime.timedelta(hours=2)
+    update_position = operator.get_last_order_datetime() < datetime.datetime.utcnow() - datetime.timedelta(hours=2) if operator.get_last_order_datetime() else True
     while True:
         operator.update_current_positions()
         print("\n" * 2)

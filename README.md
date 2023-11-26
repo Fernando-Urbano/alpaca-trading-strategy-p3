@@ -1,4 +1,9 @@
 # Trading Strategy Alpaca - P3
+Name: Fernando Urbano
+
+UChicago: fernandourbano
+
+https://github.com/Fernando-Urbano/alpaca-trading-strategy-p3
 
 # 0. Contributing Guidelines
 # 0.1. Set API Key and Secret
@@ -14,6 +19,7 @@ API_SECRET=eXAMPle1083072ofSeCRET10910245
 # 0.2. Possible Increments
 - Change the format in which data is updated to make the trader faster.
 - Try to use APIs that have lower trading cost.
+- Improve the model.
 
 # 1. Introduction
 This project aims to create a trading strategy and trade paper money with it using the Alpaca API. If wanted, the strategy can also be used to trade dollars.
