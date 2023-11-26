@@ -2,4 +2,3 @@
 *.idea
 *_backup.csv
 *.env
-*env

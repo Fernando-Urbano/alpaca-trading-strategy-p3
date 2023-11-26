@@ -1,6 +1,22 @@
-# Project 3 - Computing for Finance
-## 1. Introduction
-This project aims to create a trading strategy and trade paper money with it using the Alpaca API.
+# Trading Strategy Alpaca - P3
+
+# 0. Contributing Guidelines
+# 0.1. Set API Key and Secret
+Using your Alpaca Account, you can set your API key and secret.
+
+Afterwards, use the ".env" file already in this project and paste your key and secret in the file. There is no need to add quotation marks to make it be a string.
+
+```
+API_KEY=EXAMPLE987OFKEY112
+API_SECRET=eXAMPle1083072ofSeCRET10910245
+```
+
+# 0.2. Possible Increments
+- Change the format in which data is updated to make the trader faster.
+- Try to use APIs that have lower trading cost.
+
+# 1. Introduction
+This project aims to create a trading strategy and trade paper money with it using the Alpaca API. If wanted, the strategy can also be used to trade dollars.
 
 The trading strategy market chosen was the crypto market and the benchmark of the strategy is the Bitcoin. It's goal is to overperform Bitcoin.
 
@@ -14,7 +30,7 @@ The strategy aims to trade every hour and uses hourly data from the three crypto
 The model chosen to generate predictions about the three crypto assets is the VAR (Vector Autoregressive) model. In the model, we predict:
 
 - returns of the three crypto currencies
-- average price for a given amount of hours divided by the average price for another given amount of hours:
+- average price for a given amount of hours divided by the rolling average price for another given amount of hours:
 
 $\frac{AVG(P_{(t-n, t)})}{AVG(P_{(t-d, t)}))} - 1$
 
@@ -498,5 +514,107 @@ API_SECRET = os.getenv('API_SECRET')
 
 ### 6.2.5. Conclusion
 This script meticulously orchestrates the entire trading operation, leveraging the capabilities of the individual modules. It automates data retrieval, prediction generation, portfolio management, and trade execution, making it an effective tool for algorithmic trading.
+
+# 7. Testing and Optimization
+The testing and graphics of the model can be viewed in the `model_development.py`. There we show the construction of the strategy, map graphics of cummulative returns of the strategy and the assets and develop a backtest of the strategy.
+
+Overall, we see that:
+- the strategy, without trading cost, underperforms BTC/USD if considering the whole backtest sample (2023) and overperforms the UNI/USD and ETH/USD.
+- the strategy has better Sharpe and returns in the second part o the year (since the beginning of June).
+
+For more graphics and better understand of the code, check `model_development.py`.
+
+## 7.1. Performance of the Long-Short Portfolio between June and November 2023
+| Metric    | Portfolio - BTC/USD | Portfolio - ETH/USD | Portfolio - UNI/USD |
+|-----------|---------------------|---------------------|---------------------|
+| Mean      | 0.00004%            | 0.000071%           | 0.000035%           |
+| Std       | 0.2688%             | 0.2439%             | 0.4529%             |
+| Mean/Vol  | 0.1375%             | 2.9317%             | 0.7790%             |
+| Min       | -1.8446%            | -2.7509%            | -5.1100%            |
+| Max       | 4.5366%             | 4.1731%             | 9.0381%             |
+| Skew      | 2.434037            | 1.801426            | 1.518455            |
+| Kurtosis  | 37.473948           | 42.678689           | 50.706519           |
+
+## 7.2. Performance of the Long-Short Portfolio between January and November 2023
+| Metric    | Portfolio - BTC/USD | Portfolio - ETH/USD | Portfolio - UNI/USD |
+|-----------|---------------------|---------------------|---------------------|
+| Mean      | -0.00007%           | 0.0039%             | 0.0077%             |
+| Std       | 0.2757%             | 0.2483%             | 0.4939%             |
+| Mean/Vol  | -0.2437%            | 1.5583%             | 1.5631%             |
+| Min       | -5.5720%            | -4.6636%            | -16.6254%           |
+| Max       | 4.5366%             | 4.1731%             | 14.1928%            |
+| Skew      | 0.036425            | -0.626036           | -1.957791           |
+| Kurtosis  | 56.702591           | 62.151323           | 291.956289          |
+
+## 7.3. Long Only Portfolio between June and November 2023
+| Metric    | Portfolio Return | BTC/USD   | ETH/USD   | UNI/USD   |
+|-----------|------------------|-----------|-----------|-----------|
+| Mean      | 0.0104%          | 0.0100%   | 0.0032%   | 0.0069%   |
+| Std       | 0.4735%          | 0.4043%   | 0.4340%   | 0.7542%   |
+| Mean/Vol  | 2.1919%          | 2.4760%   | 0.7442%   | 0.9084%   |
+| Min       | -5.8525%         | -4.2443%  | -5.7937%  | -12.7802% |
+| Max       | 5.4737%          | 5.6273%   | 4.9589%   | 5.5185%   |
+| Skew      | 0.018719         | 0.875961  | -0.098094 | -1.336817 |
+| Kurtosis  | 20.835120        | 30.221639 | 28.955977 | 28.732899 |
+
+
+# 8. Compliance and Legal Considerations 
+## 8.1. Transparency and Reporting
+In my approach, I've emphasized the importance of transparency and reporting, which is a key compliance requirement. Through scripts like the Operator, I maintain detailed logs of all trading activities. This logging is not only a best practice for algorithmic trading but also aligns with regulatory expectations for transparency.
+
+## 8.2.
+Adherence to Market Conduct Rules
+My strategy is designed to respect market conduct rules. By programming my algorithms to generate genuine orders intended for execution, and not for manipulative practices like quote stuffing or spoofing, I adhere to these crucial standards. The logic in my scripts ensures that every trade decision and order is legitimate and in line with fair market practices.
+
+## 8.3. Risk Management
+Risk management is a cornerstone of my strategy. Through the integration of the Model, PortfolioManager, and Operator, I've established a robust framework to manage and mitigate risks. This includes mechanisms for cancelling open orders and managing positions dynamically, which are essential in fast-paced trading environments. Such controls are not only prudent for risk management but also necessary to meet regulatory standards in algorithmic trading.
+
+## 8.4. Algorithm Auditability
+Given the automated nature of my trading system, it's important to have mechanisms for auditing and reviewing algorithmic decisions. This aligns with regulatory expectations for algorithmic traders to be able to explain their trading decisions if required. My scripts are structured to allow for such auditability and review.
+
+## 8.5. Data Protection and Privacy
+In handling financial data, I ensure strict adherence to data protection laws, such as GDPR for European clients. My system safeguards client data, maintaining the confidentiality and integrity of all transactions. This is not only a legal obligation but also a commitment to my clients' privacy and trust. An example of that is not writing the API Key and Secret in the scripts.
+
+# 9. Results and Lessons Learned
+Reflecting on the results of my project, which involved creating a comprehensive automated trading system, I've gained valuable insights and encountered several challenges along the way. Here's an overview of my experience, the lessons I've learned, and thoughts on potential improvements for future iterations:
+
+## 9.1. Results and Performance
+The integration of various components like Updater, Model, PortfolioManager, and Operator resulted in a multifaceted trading system. This system has shown promising results in automating trade decision processes and managing a portfolio efficiently. The ability to update market data, analyze trends, make predictions, and execute trades in a cohesive manner is a significant achievement.
+
+## 9.2. Challenges Encountered
+### 9.2.1. Complexity in Integration
+One of the main challenges was ensuring seamless integration between different components. Each module, while effective on its own, needed to be precisely synchronized with others, which required extensive testing and debugging.
+
+### 9.2.2. Data Accuracy and Timeliness
+Ensuring the accuracy and timeliness of data in the Updater module was crucial for the effectiveness of the entire system. Any discrepancies in data could lead to misguided predictions and poor trading decisions.
+
+### 9.2.3. Algorithm Efficiency
+Developing and fine-tuning the algorithms in the Model component to make accurate predictions was challenging. Balancing between overfitting and underfitting the model required careful consideration and iterative testing.
+
+## 9.3. Lessons Learned
+### 9.3.1. Importance of Robust Testing:
+Rigorous testing is vital. Simulating various market conditions and testing how different components react and interact was instrumental in refining the system.
+
+### 9.3.2. Adaptability is Key
+The importance of adaptability became clear, especially in a domain as dynamic as financial markets. The ability to quickly adjust strategies and algorithms in response to market changes is crucial.
+
+### 9.3.3. Risk Management
+I learned the importance of having robust risk management protocols. The development of the PortfolioManager and Operator modules highlighted the need for measures to mitigate risks associated with automated trading.
+
+## 9.4. Potential Improvements
+### 9.4.1. Enhanced Data Analysis
+Improving the data analysis capabilities of the Updater and Model components could enhance prediction accuracy. Incorporating more diverse data sources and advanced analytical techniques might yield better insights.
+
+### 9.4.2. Algorithm Optimization
+There's room for further optimization of the trading algorithms in the Model. Exploring different algorithmic approaches and machine learning techniques could improve the system's performance.
+
+### 9.4.3. User Interface Development
+Developing a user-friendly interface would make the system more accessible, allowing for easier monitoring and adjustments of the trading strategies.
+
+### 9.4.4. Scalability and Flexibility
+Ensuring the system is scalable to handle larger datasets and flexible enough to adapt to different trading instruments would be beneficial for future iterations.
+
+### 9.5. Conclusion
+Overall, this project has been a profound learning experience, offering valuable insights into the complexities of algorithmic trading. The challenges encountered have paved the way for significant improvements, and the lessons learned will be instrumental in enhancing future versions of my trading systems.
 
 
