@@ -384,7 +384,9 @@ The definition of features was done based on which rolling average returns provi
 
 The measure to determine out-of-sample performance was the MAE. For each of the assets $a$, the MAE was calculated:
 
-$MAE_{a} = \sum_{t=1}^{n}(\hat{r}_{a, t}-r_{a, t})$
+$
+MAE_{a} = {\sum_{t=1}^{n}} {\hat{r}}_{a, t} - r_{a, t}
+$
 
 Afterwards, the MAE of the assets were summed to determine the composed MAE.
 
